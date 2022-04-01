@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Count down</title>
+    <link rel="stylesheet" href="bootstrap4/css/bootstrap.css">
+    <style>
+        .box{
+            background-color: #eee;
+            height: 300px;
+            margin: .1rem;
+            color: #999;
+            font-size: 4rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 2px 2px 5px 0 rgba(0,0,0,0.2);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1 class="text-center">Let's Count Down!</h1>
+        </header>
+        <div class="row">
+            <div class="col-12 col-sm-3 box" id="day">Days</div>
+            <div class="col-12 col-sm-3 box" id="hours">Hr</div>
+            <div class="col-12 col-sm-3 box" id="minutes">Min</div>
+            <div class="col-12 col-sm-2 box" id="seconds">Sec</div>
+            
+        </div>
+        <button class="btn btn-dark d-block mx-auto my-2 p-3">Count</button>
+        <h1 class="text-center display-4 bg-primary" id="show-text">Count Down Timer</h1>
+    </div> 
+
+    <script>
+
+        const day = document.querySelector('#day');
+        const hours = document.querySelector('#hours');
+        const minutes = document.querySelector('#minutes');
+        const seconds = document.querySelector('#seconds');
+        const showText = document.querySelector('#show-text')
+
+
+
+  const countDown = ()=>{
+      const  theDate = new Date('03/21/2022');
+      const  now = Date.now();
+      let timeRemaining = theDate - now; 
+    
+      const mySecond = 1000,
+       myMinute = 60 * mySecond, 
+       myHour = 60 * myMinute, 
+       myDay = myHour * 24
+    
+       const textDay = Math.floor(timeRemaining/myDay),
+             textHour = Math.floor((timeRemaining % myDay)/ myHour),
+             textMinutes = Math.floor((timeRemaining % myHour) / myMinute),
+             textSeconds = Math.floor((timeRemaining % myMinute) / mySecond)
+            
+    
+        day.innerHTML = `${textDay} <span style='font-size:2rem'>Day(s)</span>`;
+        hours.innerHTML = `${textHour} <span style='font-size:2rem'>Hour(s)</span>`;
+        minutes.innerHTML = `${textMinutes} <span style='font-size:2rem'>Minutes(s)</span>`;;
+        seconds.innerHTML= `${textSeconds} <span style='font-size:2rem'>Second(s)</span>`;
+
+        if(textDay === 0 && textMinutes === 0 && textMinutes === 0 && textSeconds === 0) {
+          showText.innerHTML = "Count down complete!" 
+          clearInterval(timer)
+        }
+       
+  }
+
+  const timer = setInterval(countDown, 1000) 
+
+
+
+        
+
+    </script>
+</body>
+</html>
