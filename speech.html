@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Automated Speech</title>
+    <style>
+      *{
+          margin: 0;
+          padding: 0;
+          box-sizing: border-box;
+      }
+      .container{
+          background-color: #eee;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          min-height: 100vh;
+          justify-content: space-evenly;
+      }
+      .container h1{
+          font-size: 2.5rem;
+          font-weight: 100;
+          font-family: Arial, Helvetica, sans-serif;
+          color: rgb(24, 24, 41);
+          text-align: center;
+      }
+      .container .header h1{
+          color: #ddd;
+      }
+      h3{
+        font-weight: 100;
+          font-family: Arial, Helvetica, sans-serif;
+          color: rgb(24, 24, 41); 
+          font-style: italic;  
+      }
+      .header{
+          background-color: #36069c;
+          padding: 2rem;
+          width: 100%;
+      }
+      .border{
+          border-bottom: 1px solid #ccc;
+          width: 100%;
+      }
+      .btn{
+          padding: 1rem;
+          border: none;
+          border-radius: 4px;
+          font-size: 1rem;
+          font-family: Arial, Helvetica, sans-serif;
+          background-color: #260db5;
+          color: #eee;
+          transition: all 1s;
+      }
+      .btn:hover{
+          opacity: 0.8;
+          transform: translate(5px,5px);
+          /* color: #222; */
+      }
+      textarea{
+          padding: 2rem;
+          width: 70%;
+          border: none;
+          background-color: #ddd;
+          transform: scale3d(0,0,0);
+          transition: transform 1s;
+      }
+      textarea:focus{
+          outline: none;
+      }
+      .expand{
+          transform: scale3d(1,1,2);
+      }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Javascript Automated Speech to Text</h1>
+        </div>
+        <h3>Click on the button and speak for detection</h3>
+        <button class="btn" id="speak">Click and Speak</button>
+        <span class="msg"></span>
+        <h3 class="result"></h3>
+        <div class="border"></div>
+
+        <h1>Javascript Automated Text to Speech</h1>
+        <h3>Put in some text and click the button below</h3>
+        <textarea name="" id="textarea" cols="30" rows="10"></textarea>
+        <button class="btn" id="read">Read Text</button>
+    </div>
+
+
+    <script>
+        const textArea = document.querySelector('#textarea'),
+              speak = document.querySelector('#speak'),
+              read = document.querySelector('#read'),
+              result = document.querySelector('.result'),
+              msg = document.querySelector('.msg');
+        const response =['Well, I try to be fine', 'May I know you, what is your name', 'I do not realy feel like chatting today','Would you ask me about the weather today buddy', 'I am not feeling very well today. Any tips', 'For some weird reasons, my name is Joe! What is yours']
+
+        const expand = ()=>{
+            textArea.classList.add('expand')
+        }
+        
+        speechRecognition = window.speechRecognition || window.webkitSpeechRecognition
+
+        const recognition = new speechRecognition()
+
+        recognition.onstart = ()=>{
+            msg.innerHTML = "Speak up, we are listening..."
+        }
+
+        recognition.onresult = (e)=>{
+            msg.innerHTML = "Speech Ended..."
+            let current = e.resultIndex;
+            let transcript = e.results[current][0].transcript
+            let confidence = e.results[0][0].confidence
+            result.innerHTML = `${transcript}`
+            let selectIndex = Math.floor(Math.random() * response.length)
+            readMsg(response[selectIndex])
+        }
+       
+        speak.addEventListener('click', ()=>{
+            recognition.start()
+        })
+
+
+        const textSpeech = ()=>{
+            let text = textArea.value;
+            if(!text){
+                text = "You should probably provide some text. I have nothing to say."
+            }
+            readMsg(text)
+        }
+
+        read.addEventListener('click', ()=>{
+            textSpeech()
+        })
+
+        const readMsg = (myMsg)=>{
+            let speech = new SpeechSynthesisUtterance()
+                speech.text = myMsg;
+                speech.rate = 1;
+                speech.volume = 1;
+                speech.pitch = 1;
+                speech.lang = "en-US"
+                speechSynthesis.speak(speech)
+        }
+
+        setTimeout(expand, 1000)
+    </script>
+</body>
+</html>
