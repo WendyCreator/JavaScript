@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Gallery</title>
+</head>
+<style>
+    *{
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+    .container header{
+        width: 100%;
+        height: 7rem;
+        background-color: #555;
+        color: #eee;
+        text-align: center;
+        padding: .8rem;
+        margin: .2rem 0;
+    }
+    .container header h1{
+        font-size: 3rem;
+
+    }
+    .row{
+        display: grid;
+        grid-template-columns: auto auto auto auto;
+        gap: .2rem;
+       
+    }
+    .row img{
+        max-width: 100%;
+        transition: transform 1s;
+        /* filter: blur(10px); */
+    }
+    .col:hover img{
+        transform: scale(1.1,1.1);
+        /* filter: blur(0); */
+    }
+    .blur{
+          filter: blur(20px); 
+        }
+     .overlay{
+            position: fixed;
+            background-color: rgba(0,0,0,0.3);
+            z-index: 20;
+            top: 0;
+            width: 100vw;
+            height: 100vh;
+            display: none;
+            place-items: center;
+            /* opacity: 0; */
+            transition: all 1s;
+    }
+    .inner figure{
+        width: 50vw;
+        /* height: 50vh; */
+    }
+    .inner figure img{
+        max-width: 100%;
+        transition: transform 5s;
+    }
+    .inner figure:hover img{
+        transform: rotateY(.5turn);
+    }
+    .opaque{
+        opacity: 1;
+    }
+    .show{
+        display: grid;
+    }
+    #overlay-img{
+        transition: transform 1s;
+    }
+    .input{
+        background-color: #999;
+        padding: .2rem;
+        margin: .3rem;
+    }
+    .input input{
+        width: 60%;
+        display: block;
+        margin: auto;
+        padding: .4rem;
+        border: none;
+        border-radius: 5px;
+        background-color: #444;
+        transition: transform 1s;
+    }
+    input:focus{
+        outline: none;
+        transform: scale(1.2,1.2);
+    }
+</style>
+<body>
+    <div class="container">
+        <header>
+            <h1>My Image Gallery</h1>
+        </header>
+        <div class="input"><input type="search" id="search" placeholder="search image..."></div>
+        <div class="row">
+            <div class="col">
+                <figure><img src="../images/team-1.jpg" alt="" class="img"></figure>
+                <figcaption class="text">Man holding house model</figcaption>
+            </div>
+            <div class="col">
+                <figure><img src="../images/team-2.jpg" alt="" class="img"></figure>
+                <figcaption class="text">Man in Blue shirt and tie folding hands</figcaption>
+            </div>
+            <div class="col">
+                <figure><img src="../images/team-3.jpg" alt="" class="img"></figure>
+                <figcaption class="text">Lady wearing white suite and folding hands</figcaption>
+            </div>
+            <div class="col">
+                <figure><img src="../images/team-4.jpg" alt="" class="img"></figure>
+                <figcaption class="text">lady wear white shirt and folding hands</figcaption>
+            </div>
+            <div class="col">
+                <figure><img src="../images/team-5.jpg" alt="" class="img"></figure>
+                <figcaption class="text">Man wearing navy blue suite and folding hands</figcaption>
+            </div>
+            <div class="col">
+                <figure><img src="../images/team-6.jpg" alt="" class="img"></figure>
+                <figcaption class="text">Man wearing a black suite and folding hands</figcaption>
+            </div>
+            <div class="col">
+                <figure><img src="../images/team-7.jpg" alt="" class="img"></figure>
+                <figcaption class="text">Lady wearing a blouse with hand on chin</figcaption>
+            </div>
+            <div class="col">
+                <figure><img src="../images/team-8.jpg" alt="" class="img"></figure>
+                <figcaption class="text">Man wearing glasses, wearing a dark suite with hands on tie</figcaption>
+            </div>
+        </div>
+        <div class="overlay">
+            <div class="inner">
+                <figure><img src="" alt="" id="overlay-img"></figure>
+            <!-- <figcaption><h4>Where is the image</h4></figcaption> -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const imgs = document.querySelectorAll('.img'),
+              overImg = document.querySelector('#overlay-img'),
+              row = document.querySelector('.row'),
+              overlay = document.querySelector('.overlay'),
+              search = document.querySelector('#search')
+              text = document.querySelectorAll('.text')
+     
+           imgs.forEach(img=>{
+               img.addEventListener('click', ()=>{
+                   overlay.classList.add('show')
+                   overImg.src = img.src
+                   row.classList.add('blur')
+               })
+           })
+
+           search.addEventListener('input',(e)=>{
+            text.forEach(txt=>{
+                compareTxt = txt.innerHTML.toLowerCase();
+                searchTxt = e.target.value.toLowerCase()
+                if(compareTxt.includes(searchTxt)){
+                    txt.parentElement.style.display = ''
+                } else{
+                    txt.parentElement.style.display = 'none'
+                }
+            })
+            
+           })
+
+
+           overlay.addEventListener('click', ()=>{
+               overlay.classList.remove('show')
+               overImg.src = '';
+               row.classList.remove('blur')
+           })
+
+    </script>
+</body>
+</html>
