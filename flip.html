@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flip</title>
+    <style>
+        *,::after,::before{
+            box-sizing: border-box;
+            margin: 0;
+        }
+        body{
+            height: 100vh;
+            display: grid;
+            place-items: center;
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+        }
+        .card{
+            width: 30%;
+            height: 70vh
+        }
+        .card-content{
+            /* background-color: #777; */
+            height: 100%;
+            color: #ddd;
+            text-align: center;
+            position: relative;
+            padding: 5em;
+            transition: transform 2s;
+            transform-style: preserve-3d;
+            box-shadow: 8px 8px 10px 0 rgba(0,0,0,0.2);
+            display: flex;
+        }
+        .card-front, .card-back{
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            padding: 2em;
+            backface-visibility: hidden;
+            transform-style: preserve-3d;
+        }
+        .card:hover .card-content{
+            transform: rotateY(.5turn);
+        }
+        
+        .card-title{
+            /* transform-style: preserve-3d; */
+            font-size: 3rem;
+          
+            transform: translate3d(0,0,8rem);
+        }
+        .card-subtitle{
+            transform: translate3d(0,0, 5rem);
+        }
+        .card-body{
+            transform: translate3d(0,0, 3rem);
+        }
+        .card-back{
+            transform: rotateY(.5turn);
+            background-image: url(./images/image_8.jpg);
+            color: #222;
+        }
+        .border{
+            height: 100%;
+            width: 100%;
+            border: 2px solid #ddd;
+            transform-style: preserve-3d;
+            padding: 1rem;
+            backface-visibility: hidden;
+            transform: translate3d(0,0,3rem);
+        }
+        .card-front{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-image: url(./images/tech1.jpeg);
+            background-position: top right;
+            background-blend-mode: color;
+            background-color: #222;
+            /* position: relative; */
+        }
+        .card-front img{
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <div class="card-content">
+            <div class="card-front">
+                     <!-- <img src="./images/tech1.jpeg" alt=""> -->
+                    <div class="border">
+                    <h3 class="card-title">Wendy Creator</h3>
+                    <p class="card-subtitle">Let us some fun</p>
+                </div>
+            </div>
+                <div class="card-back">
+                    <p class="card-body">
+                        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Laboriosam corporis vel illo, hic voluptatibus aliquid accusamus nostrum ut assumenda commodi.
+                    </p>
+                </div>
+        </div>
+    </div>
+</body>
+</html>
